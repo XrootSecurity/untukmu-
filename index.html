@@ -23,7 +23,7 @@
      </div>
    </div>
 
-   <audio src="https://c.top4top.io/m_3314yno0s1.mp3" id="linkmp3" class="sembunyi"></audio>
+   <audio id="linkmp3" class="sembunyi" autoplay></audio>
    
   <section class="first" id="inisection">
        <div class="wp"><img src="https://i.pinimg.com/736x/ca/5a/90/ca5a90ffb2f915afa469fbcf388e0fbf.jpg"/></div>
@@ -87,7 +87,38 @@ Selalu dengan cinta,
         <br><br><b><b class="putih merah">I Love You Sayang🥰😍🤍</b></b></p>
       </div>
   </section>
+ <script>
+    // Daftar URL MP3
+    const audioUrls = [
+      "https://c.top4top.io/m_3314yno0s1.mp3", // URL pertama
+      "https://c.top4top.io/m_33146tqtb1.mp3"  // URL kedua
+    ];
 
+    // Inisialisasi elemen audio
+    const audioPlayer = document.getElementById("linkmp3");
+    let currentTrackIndex = 0;
+
+    // Fungsi untuk memutar lagu
+    function playTrack(index) {
+      if (index < audioUrls.length) {
+        audioPlayer.src = audioUrls[index];
+        audioPlayer.play();
+      }
+    }
+
+    // Event ketika lagu selesai
+    audioPlayer.addEventListener("ended", () => {
+      currentTrackIndex++;
+      if (currentTrackIndex < audioUrls.length) {
+        playTrack(currentTrackIndex); // Putar lagu berikutnya
+      } else {
+        console.log("Semua lagu telah selesai diputar.");
+      }
+    });
+
+    // Mulai dengan lagu pertama
+    playTrack(currentTrackIndex);
+  </script>
 <script src="https://makasi.feeldream.id/script.js"></script>
 </body>
 </html>
