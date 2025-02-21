@@ -6,124 +6,134 @@
     <title>Pencarian Data</title>
     <style>
         /* Mengatur font dasar */
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 20px;
+        }
 
-/* Container utama */
-.container {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
+        /* Bar atas untuk input pencarian */
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
 
-/* Input dan tombol pencarian */
-.search-box {
-    display: flex;
-    margin-bottom: 20px;
-}
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
+        .search-bar button {
+            padding: 10px 15px;
+            background: #ff7eb3;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-button {
-    padding: 10px 15px;
-    background: #ff7eb3;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .search-bar button:hover {
+            background: #ff5370;
+        }
 
-button:hover {
-    background: #ff5370;
-}
+        /* Container utama */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+        }
 
-/* Daftar hasil pencarian */
-ul {
-    list-style: none;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
-}
+        /* Daftar hasil pencarian */
+        ul {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
 
-li {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    transition: 0.3s;
-}
+        li {
+            background: black;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
 
-li:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
+        li:hover {
+            background: #222;
+        }
     </style>
 </head>
 <body>
 
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cari Nama, NIK, Alamat, dll...">
+        <button onclick="searchData()">Cari</button>
+    </div>
+
     <div class="container">
         <h2>Pencarian Data</h2>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Cari Nama, NIK, Alamat, dll...">
-            <button onclick="searchData()">Cari</button>
-        </div>
         <ul id="resultList"></ul>
     </div>
 
     <script>
         let databaseData = [];
 
-// Fungsi untuk memuat data dari database.txt
-async function loadDatabase() {
-    try {
-        const response = await fetch('oke2.txt');
-        const text = await response.text();
-        databaseData = text.split('\n').map(line => line.trim()).filter(line => line !== '');
-    } catch (error) {
-        console.error("Gagal memuat database:", error);
-    }
-}
+        // Fungsi untuk memuat data dari database.txt
+        async function loadDatabase() {
+            try {
+                const response = await fetch('oke2.txt');
+                const text = await response.text();
+                databaseData = text.split('\n').map(line => line.trim()).filter(line => line !== '');
+            } catch (error) {
+                console.error("Gagal memuat database:", error);
+            }
+        }
 
-// Fungsi untuk mencari data
-function searchData() {
-    let query = document.getElementById("searchInput").value.toLowerCase();
-    let resultList = document.getElementById("resultList");
-    resultList.innerHTML = '';
+        // Fungsi untuk mencari data
+        function searchData() {
+            let query = document.getElementById("searchInput").value.toLowerCase();
+            let resultList = document.getElementById("resultList");
+            resultList.innerHTML = '';
 
-    let results = databaseData.filter(item => item.toLowerCase().includes(query));
+            let results = databaseData.filter(item => item.toLowerCase().includes(query));
 
-    if (results.length === 0) {
-        resultList.innerHTML = "<li>Data tidak ditemukan</li>";
-    } else {
-        results.forEach(result => {
-            let li = document.createElement("li");
-            li.textContent = result;
-            resultList.appendChild(li);
-        });
-    }
-}
+            if (results.length === 0) {
+                resultList.innerHTML = "<li>Data tidak ditemukan</li>";
+            } else {
+                results.forEach(result => {
+                    let li = document.createElement("li");
+                    li.textContent = result;
+                    resultList.appendChild(li);
+                });
+            }
+        }
 
-// Panggil fungsi loadDatabase saat halaman dimuat
-window.onload = loadDatabase;
+        // Panggil fungsi loadDatabase saat halaman dimuat
+        window.onload = loadDatabase;
     </script>
 
 </body>
