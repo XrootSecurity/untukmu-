@@ -181,59 +181,65 @@
         }
 
         function cekNIK() {
-            let nik = document.getElementById("nikInput").value.trim();
-            let resultNIK = document.getElementById("resultNIK");
-            resultNIK.innerHTML = '';
+    let nik = document.getElementById("nikInput").value.trim();
+    let resultNIK = document.getElementById("resultNIK");
+    resultNIK.innerHTML = '';
 
-            if (!/^\d{16}$/.test(nik)) {
-                resultNIK.innerHTML = `<li>NIK harus 16 digit angka!</li>`;
-                return;
-            }
+    // Validasi NIK harus 16 digit angka
+    if (!/^\d{16}$/.test(nik)) {
+        resultNIK.innerHTML = `<li>NIK harus 16 digit angka!</li>`;
+        return;
+    }
 
-            let kodeProvinsi = nik.substring(0, 2);
-            let kodeKabupaten = nik.substring(0, 4);
-            let kodeKecamatan = nik.substring(0, 6);
+    // Ambil kode wilayah dari NIK
+    let kodeProvinsi = nik.substring(0, 2);
+    let kodeKabupaten = nik.substring(0, 4);
+    let kodeKecamatan = nik.substring(0, 6);
 
-            let provinsi = dataWilayah.find(prov => prov.kode === kodeProvinsi);
-            if (!provinsi) {
-                resultNIK.innerHTML = `<li>Provinsi tidak ditemukan untuk kode ${kodeProvinsi}</li>`;
-                return;
-            }
+    // Cari provinsi berdasarkan kode
+    let provinsi = dataWilayah.find(prov => prov.kode === kodeProvinsi);
+    if (!provinsi) {
+        resultNIK.innerHTML = `<li>Provinsi dengan kode <b>${kodeProvinsi}</b> tidak ditemukan. Pastikan NIK valid.</li>`;
+        return;
+    }
 
-            let kabupaten = provinsi.kabupaten_kota.find(kab => kab.kode === kodeKabupaten);
-            if (!kabupaten) {
-                resultNIK.innerHTML = `<li>Kabupaten/Kota tidak ditemukan untuk kode ${kodeKabupaten}</li>`;
-                return;
-            }
+    // Cari kabupaten/kota berdasarkan kode
+    let kabupaten = provinsi.kabupaten_kota.find(kab => kab.kode === kodeKabupaten);
+    if (!kabupaten) {
+        resultNIK.innerHTML = `<li>Kabupaten/Kota dengan kode <b>${kodeKabupaten}</b> tidak ditemukan di provinsi ${provinsi.nama}.</li>`;
+        return;
+    }
 
-            let kecamatan = kabupaten.kecamatan.find(kec => kec.kode === kodeKecamatan);
-            if (!kecamatan) {
-                resultNIK.innerHTML = `<li>Kecamatan tidak ditemukan untuk kode ${kodeKecamatan}</li>`;
-                return;
-            }
+    // Cari kecamatan berdasarkan kode
+    let kecamatan = kabupaten.kecamatan.find(kec => kec.kode === kodeKecamatan);
+    if (!kecamatan) {
+        resultNIK.innerHTML = `<li>Kecamatan dengan kode <b>${kodeKecamatan}</b> tidak ditemukan di kabupaten ${kabupaten.nama}.</li>`;
+        return;
+    }
 
-            let tanggal = parseInt(nik.substring(6, 8), 10);
-            let bulan = parseInt(nik.substring(8, 10), 10);
-            let tahun = parseInt(nik.substring(10, 12), 10);
-            tahun = tahun < 25 ? "20" + tahun : "19" + tahun;
+    // Jika semua data ditemukan, tampilkan hasil
+    let tanggal = parseInt(nik.substring(6, 8), 10);
+    let bulan = parseInt(nik.substring(8, 10), 10);
+    let tahun = parseInt(nik.substring(10, 12), 10);
+    tahun = tahun < 25 ? "20" + tahun : "19" + tahun;
 
-            let gender = tanggal > 40 ? "Perempuan" : "Laki-laki";
-            tanggal = tanggal > 40 ? tanggal - 40 : tanggal;
+    let gender = tanggal > 40 ? "Perempuan" : "Laki-laki";
+    tanggal = tanggal > 40 ? tanggal - 40 : tanggal;
 
-            let birthdate = `${tanggal}-${bulan}-${tahun}`;
-            let usia = new Date().getFullYear() - parseInt(tahun);
+    let birthdate = `${tanggal}-${bulan}-${tahun}`;
+    let usia = new Date().getFullYear() - parseInt(tahun);
 
-            resultNIK.innerHTML = `
-                <li><b>NIK:</b> ${nik}</li>
-                <li><b>Jenis Kelamin:</b> ${gender}</li>
-                <li><b>Tanggal Lahir:</b> ${birthdate}</li>
-                <li><b>Usia:</b> ${usia} Tahun</li>
-                <li><b>Provinsi:</b> ${provinsi.nama}</li>
-                <li><b>Kabupaten/Kota:</b> ${kabupaten.nama}</li>
-                <li><b>Kecamatan:</b> ${kecamatan.nama}</li>
-                <li><b>Kode Pos:</b> ${kecamatan.kodepos}</li>
-            `;
-        }
+    resultNIK.innerHTML = `
+        <li><b>NIK:</b> ${nik}</li>
+        <li><b>Jenis Kelamin:</b> ${gender}</li>
+        <li><b>Tanggal Lahir:</b> ${birthdate}</li>
+        <li><b>Usia:</b> ${usia} Tahun</li>
+        <li><b>Provinsi:</b> ${provinsi.nama}</li>
+        <li><b>Kabupaten/Kota:</b> ${kabupaten.nama}</li>
+        <li><b>Kecamatan:</b> ${kecamatan.nama}</li>
+        <li><b>Kode Pos:</b> ${kecamatan.kodepos}</li>
+    `;
+}
 
         function cariData() {
             let query = document.getElementById("searchInput").value.toLowerCase();
