@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencarian Data</title>
+    <title>Cek NIK & Cari Data TXT</title>
     <style>
-        /* Mengatur font dasar */
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: white;
+            text-align: center;
             padding-top: 20px;
         }
 
-        /* Bar atas untuk input pencarian */
         .search-bar {
-            width: 100%;
-            max-width: 600px;
+            width: 90%;
+            max-width: 500px;
+            margin: 10px auto;
             display: flex;
-            background: rgba(255, 255, 255, 0.2);
+            background: #333;
             padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
         }
 
         .search-bar input {
@@ -35,74 +29,91 @@
             border: none;
             border-radius: 5px;
             font-size: 16px;
+            outline: none;
         }
 
         .search-bar button {
-            padding: 10px 15px;
+            padding: 10px;
             background: #ff7eb3;
             border: none;
             color: white;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .search-bar button:hover {
-            background: #ff5370;
-        }
-
-        /* Container utama */
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: #222;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
             width: 90%;
-            max-width: 600px;
-            text-align: center;
-            margin-top: 20px;
+            max-width: 700px;
+            margin: 20px auto;
+            text-align: left;
         }
 
-        /* Daftar hasil pencarian */
+        .container h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ff7eb3;
+        }
+
         ul {
             list-style: none;
             padding: 0;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
-            margin-top: 10px;
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         li {
             background: black;
-            color: white;
-            padding: 10px;
+            padding: 12px;
             margin: 5px 0;
             border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        li:hover {
-            background: #222;
+            border-left: 5px solid #ff7eb3;
         }
     </style>
 </head>
 <body>
 
+    <h2>Lihat Informasi NIK</h2>
     <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cari Nama, NIK, Alamat, dll...">
-        <button onclick="searchData()">Cari</button>
+        <input type="text" id="nikInput" placeholder="Masukkan NIK (16 digit)">
+        <button onclick="cekNIK()">Cek</button>
     </div>
 
     <div class="container">
-        <h2>Pencarian Data</h2>
-        <ul id="resultList"></ul>
+        <h3>Hasil Pencarian NIK</h3>
+        <ul id="resultNIK"></ul>
+    </div>
+
+    <h2>Tools Pencarian Data Pribadi</h2>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cari Nama, Nomor, IP...">
+        <button onclick="cariData()">Cari</button>
+    </div>
+
+    <div class="container">
+        <h3>Hasil Doxx</h3>
+        <ul id="dataList"></ul>
     </div>
 
     <script>
+        let dataWilayah = [];
         let databaseData = [];
 
-        // Fungsi untuk memuat data dari database.txt
+        async function loadJSON() {
+            try {
+                const response = await fetch('data.json');
+                dataWilayah = await response.json();
+            } catch (error) {
+                console.error("Gagal memuat data wilayah:", error);
+            }
+        }
+
         async function loadDatabase() {
             try {
                 const response = await fetch('oke2.txt');
@@ -113,27 +124,89 @@
             }
         }
 
-        // Fungsi untuk mencari data
-        function searchData() {
+        function cekNIK() {
+            let nik = document.getElementById("nikInput").value.trim();
+            let resultNIK = document.getElementById("resultNIK");
+            resultNIK.innerHTML = '';
+
+            if (nik.length !== 16) {
+                resultNIK.innerHTML = `<li>NIK harus 16 digit!</li>`;
+                return;
+            }
+
+            let kodeProvinsi = nik.substring(0, 2);
+            let kodeKabupaten = nik.substring(0, 4);
+            let kodeKecamatan = nik.substring(0, 6);
+            let tanggal = parseInt(nik.substring(6, 8), 10);
+            let bulan = parseInt(nik.substring(8, 10), 10);
+            let tahun = parseInt(nik.substring(10, 12), 10);
+            tahun = tahun < 25 ? "20" + tahun : "19" + tahun;
+
+            let gender = tanggal > 40 ? "Perempuan" : "Laki-laki";
+            tanggal = tanggal > 40 ? tanggal - 40 : tanggal;
+
+            let provinsi = "Tidak ditemukan";
+            let kabupaten = "Tidak ditemukan";
+            let kecamatan = "Tidak ditemukan";
+            let kodepos = "Tidak diketahui";
+
+            for (let prov of dataWilayah) {
+                if (prov.kode === kodeProvinsi) {
+                    provinsi = prov.nama;
+                    for (let kab of prov.kabupaten_kota) {
+                        if (kab.kode === kodeKabupaten) {
+                            kabupaten = kab.nama;
+                            for (let kec of kab.kecamatan) {
+                                if (kec.kode === kodeKecamatan) {
+                                    kecamatan = kec.nama;
+                                    kodepos = kec.kodepos;
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            let birthdate = `${tanggal}-${bulan}-${tahun}`;
+            let usia = new Date().getFullYear() - parseInt(tahun);
+
+            resultNIK.innerHTML = `
+                <li><b>NIK:</b> ${nik}</li>
+                <li><b>Jenis Kelamin:</b> ${gender}</li>
+                <li><b>Tanggal Lahir:</b> ${birthdate}</li>
+                <li><b>Usia:</b> ${usia} Tahun</li>
+                <li><b>Provinsi:</b> ${provinsi}</li>
+                <li><b>Kabupaten/Kota:</b> ${kabupaten}</li>
+                <li><b>Kecamatan:</b> ${kecamatan}</li>
+                <li><b>Kode Pos:</b> ${kodepos}</li>
+            `;
+        }
+
+        function cariData() {
             let query = document.getElementById("searchInput").value.toLowerCase();
-            let resultList = document.getElementById("resultList");
-            resultList.innerHTML = '';
+            let dataList = document.getElementById("dataList");
+            dataList.innerHTML = '';
 
             let results = databaseData.filter(item => item.toLowerCase().includes(query));
 
             if (results.length === 0) {
-                resultList.innerHTML = "<li>Data tidak ditemukan</li>";
+                dataList.innerHTML = "<li>Data tidak ditemukan</li>";
             } else {
                 results.forEach(result => {
                     let li = document.createElement("li");
                     li.textContent = result;
-                    resultList.appendChild(li);
+                    dataList.appendChild(li);
                 });
             }
         }
 
-        // Panggil fungsi loadDatabase saat halaman dimuat
-        window.onload = loadDatabase;
+        window.onload = function() {
+            loadJSON();
+            loadDatabase();
+        };
     </script>
 
 </body>
