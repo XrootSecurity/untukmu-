@@ -40,6 +40,7 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            margin-left: 10px;
         }
 
         .container {
@@ -75,6 +76,30 @@
             border-radius: 5px;
             border-left: 5px solid #ff7eb3;
         }
+
+        .download-prompt {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .download-prompt button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .download-prompt button.yes {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .download-prompt button.no {
+            background: #f44336;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -97,13 +122,19 @@
     </div>
 
     <div class="container">
-        <h3>Hasil Doxx</h3>
+        <h3>Hasil Pencarian</h3>
         <ul id="dataList"></ul>
+        <div class="download-prompt" id="downloadPrompt" style="display: none;">
+            <p>Apakah Anda ingin mengunduh hasil pencarian?</p>
+            <button class="yes" onclick="downloadHasil()">Ya</button>
+            <button class="no" onclick="tutupPrompt()">Tidak</button>
+        </div>
     </div>
 
     <script>
         let dataWilayah = [];
         let databaseData = [];
+        let hasilPencarian = [];
 
         async function loadJSON() {
             try {
@@ -129,8 +160,8 @@
             let resultNIK = document.getElementById("resultNIK");
             resultNIK.innerHTML = '';
 
-            if (nik.length !== 16) {
-                resultNIK.innerHTML = `<li>NIK harus 16 digit!</li>`;
+            if (!/^\d{16}$/.test(nik)) {
+                resultNIK.innerHTML = `<li>NIK harus 16 digit angka!</li>`;
                 return;
             }
 
@@ -190,17 +221,33 @@
             let dataList = document.getElementById("dataList");
             dataList.innerHTML = '';
 
-            let results = databaseData.filter(item => item.toLowerCase().includes(query));
+            hasilPencarian = databaseData.filter(item => item.toLowerCase().includes(query));
 
-            if (results.length === 0) {
+            if (hasilPencarian.length === 0) {
                 dataList.innerHTML = "<li>Data tidak ditemukan</li>";
             } else {
-                results.forEach(result => {
+                hasilPencarian.forEach(result => {
                     let li = document.createElement("li");
                     li.textContent = result;
                     dataList.appendChild(li);
                 });
+                document.getElementById("downloadPrompt").style.display = "block";
             }
+        }
+
+        function downloadHasil() {
+            let blob = new Blob([hasilPencarian.join('\n')], { type: 'text/plain' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "hasil_pencarian.txt";
+            a.click();
+            URL.revokeObjectURL(url);
+            tutupPrompt();
+        }
+
+        function tutupPrompt() {
+            document.getElementById("downloadPrompt").style.display = "none";
         }
 
         window.onload = function() {
