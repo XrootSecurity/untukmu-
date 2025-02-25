@@ -11,6 +11,13 @@
             color: white;
             text-align: center;
             padding-top: 20px;
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px; /* Ukuran logo */
+            height: auto;
+            margin-bottom: 20px;
         }
 
         .search-bar {
@@ -100,9 +107,27 @@
             background: #f44336;
             color: white;
         }
+
+        @media (max-width: 600px) {
+            .logo {
+                width: 120px; /* Ukuran logo lebih kecil di mobile */
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar input, .search-bar button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Logo -->
+    <img src="logo.png" alt="Logo" class="logo">
 
     <h2>Lihat Informasi NIK</h2>
     <div class="search-bar">
@@ -168,6 +193,25 @@
             let kodeProvinsi = nik.substring(0, 2);
             let kodeKabupaten = nik.substring(0, 4);
             let kodeKecamatan = nik.substring(0, 6);
+
+            let provinsi = dataWilayah.find(prov => prov.kode === kodeProvinsi);
+            if (!provinsi) {
+                resultNIK.innerHTML = `<li>Provinsi tidak ditemukan untuk kode ${kodeProvinsi}</li>`;
+                return;
+            }
+
+            let kabupaten = provinsi.kabupaten_kota.find(kab => kab.kode === kodeKabupaten);
+            if (!kabupaten) {
+                resultNIK.innerHTML = `<li>Kabupaten/Kota tidak ditemukan untuk kode ${kodeKabupaten}</li>`;
+                return;
+            }
+
+            let kecamatan = kabupaten.kecamatan.find(kec => kec.kode === kodeKecamatan);
+            if (!kecamatan) {
+                resultNIK.innerHTML = `<li>Kecamatan tidak ditemukan untuk kode ${kodeKecamatan}</li>`;
+                return;
+            }
+
             let tanggal = parseInt(nik.substring(6, 8), 10);
             let bulan = parseInt(nik.substring(8, 10), 10);
             let tahun = parseInt(nik.substring(10, 12), 10);
@@ -175,31 +219,6 @@
 
             let gender = tanggal > 40 ? "Perempuan" : "Laki-laki";
             tanggal = tanggal > 40 ? tanggal - 40 : tanggal;
-
-            let provinsi = "Tidak ditemukan";
-            let kabupaten = "Tidak ditemukan";
-            let kecamatan = "Tidak ditemukan";
-            let kodepos = "Tidak diketahui";
-
-            for (let prov of dataWilayah) {
-                if (prov.kode === kodeProvinsi) {
-                    provinsi = prov.nama;
-                    for (let kab of prov.kabupaten_kota) {
-                        if (kab.kode === kodeKabupaten) {
-                            kabupaten = kab.nama;
-                            for (let kec of kab.kecamatan) {
-                                if (kec.kode === kodeKecamatan) {
-                                    kecamatan = kec.nama;
-                                    kodepos = kec.kodepos;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
 
             let birthdate = `${tanggal}-${bulan}-${tahun}`;
             let usia = new Date().getFullYear() - parseInt(tahun);
@@ -209,10 +228,10 @@
                 <li><b>Jenis Kelamin:</b> ${gender}</li>
                 <li><b>Tanggal Lahir:</b> ${birthdate}</li>
                 <li><b>Usia:</b> ${usia} Tahun</li>
-                <li><b>Provinsi:</b> ${provinsi}</li>
-                <li><b>Kabupaten/Kota:</b> ${kabupaten}</li>
-                <li><b>Kecamatan:</b> ${kecamatan}</li>
-                <li><b>Kode Pos:</b> ${kodepos}</li>
+                <li><b>Provinsi:</b> ${provinsi.nama}</li>
+                <li><b>Kabupaten/Kota:</b> ${kabupaten.nama}</li>
+                <li><b>Kecamatan:</b> ${kecamatan.nama}</li>
+                <li><b>Kode Pos:</b> ${kecamatan.kodepos}</li>
             `;
         }
 
